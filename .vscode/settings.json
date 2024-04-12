@@ -2,5 +2,8 @@
     "[markdown]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+    },
+    "markdownlint.config": {
+        "MD034": false
     }
 }
