@@ -1,5 +1,5 @@
 ---
-title: "pydantic aliasでjsonキーを自在に操りたい"
+title: "Pydantic aliasでjsonキーを自在に操りたい"
 emoji: "⛳"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python", "pydantic"]
