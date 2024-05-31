@@ -133,7 +133,7 @@ print(user.model_dump_json(by_alias=True))  # {"Name":"test_user","Age":23}
 
 ```
 
-### 複数取りうる値があるからAliasChoiceを使う
+### 複数取りうる値がある場合はAliasChoiceを使う
 
 1対1の紐づけはできるようになりました。
 ただ、場合によっては取りうる値が複数あるときもあると思います。
