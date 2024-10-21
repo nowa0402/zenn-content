@@ -3,7 +3,7 @@ title: "Ryeとキャッシュ機能で快適なCI環境を整備してみた"
 emoji: "🐰"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python", "rye", "github", "githubactions"]
-published: false
+published: true
 publication_name: "spectee"
 ---
 
@@ -139,7 +139,7 @@ jobs:
 ```
 
 続いて子のワークフローを実装します。Ryeのセットアップは親と一緒です。
-ポイントは**「`cache-prefix`を親と一緒にする」**ことです。
+ポイントは **「`cache-prefix`を親と一緒にする」** ことです。
 これにより、親が先行して作成・キャッシュしてくれたPythonの仮想環境を使うことができます。
 
 ```yaml:ci.yaml
@@ -245,8 +245,8 @@ extend = "../../pyproject.toml"
 
 https://ymmt.hatenablog.com/entry/2024/10/02/222243
 
-つまり、キャッシュ利用時は、リポジトリのブランチ運用の考慮が必要です（奥が深い…）。
-私の所属するチームはトランクベースをちょっといじったような運用なのでそこまで記事の影響を受けませんが、多数のブランチを運用されている場合は考慮してみると良さそうです。
+つまり、キャッシュ利用時はブランチ運用の考慮も必要です（奥が深い…）。
+私の所属するチームはトランクベースをちょっといじったような運用なのでそこまで記事の影響を受けませんが、キャッシュを検討する際は一度記事に目を通しておくと良さそうです。
 
 https://www.docswell.com/s/uta8a/KYDW9P-2024-08-22-github-actions-tips#p13
 
