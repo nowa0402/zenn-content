@@ -316,8 +316,8 @@ convention = "google"
 | pydocestyle warning  | W  | pycodestyleの派生 |
 | pydocstyle  | D  | docstringのチェック |
 | isort  | I | インポート順序のチェック・並び替え |
-| pyupgrade  | UP | Python コードを自動で最新バージョンに対応させる |
-| pep8-naming  | N | Python コードの命名規則が PEP 8 に準拠しているかをチェック |
+| pyupgrade  | UP |  Pythonコードが最新バージョンに対応しているかチェック |
+| pep8-naming  | N | Pythonコードの命名規則がPEP8に準拠しているかチェック |
 
 開発ではVsCodeの設定は変更なしです。
 
