@@ -3,7 +3,7 @@ title: "チームのRuff設定を見直してみた"
 emoji: "🔍️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python", "ruff"]
-published: false
+published: true
 publication_name: "spectee"
 ---
 
