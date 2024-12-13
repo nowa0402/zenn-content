@@ -3,7 +3,7 @@ title: "pytestカバレッジをプルリクエストのコメントに表示す
 emoji: "🎉"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python", "pytest", "github", "githubactions", "rye"]
-published: false
+published: true
 publication_name: "spectee"
 ---
 
@@ -96,7 +96,7 @@ ci = { chain = ["check", "test:cov"] }
 check = { chain = ["check:ruff", "check:mypy"] }
 "test:cov" = "./scripts/test_cov.sh"
 "check:ruff" = "ruff check --config pyproject.toml src"
-"check:mypy" = "mypy src --config-file=../../pyproject.toml"
+"check:mypy" = "mypy src --config-file=pyproject.toml"
 ```
 
 scripts/test_cov.sh
@@ -116,9 +116,8 @@ on:
   pull_request:          # 重要:ワークフローの起動条件にプルリクエストを追加
 
 permissions:
-  id-token: write
-  contents: write        # 重要:権限設定
   pull-requests: write   # 重要:権限設定
+  contents: read        
 
 jobs:
   setup:
@@ -153,8 +152,8 @@ on:
   workflow_call:
 
 permissions:
-  contents: write
-  pull-requests: write
+  pull-requests: write # 重要:権限設定
+  contents: read
 
 jobs:
   ci:
@@ -184,6 +183,8 @@ jobs:
           pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest.xml
           title: Coverage Report（ServiceA）
+          unique-id-for-comment: ServiceA # 同じコメントにテスト結果を追記するための一意なID
+          create-new-comment: false # 既存のコメントを更新します。同じコメントにテスト結果を追記するため、新しいコメントは作成しません。
 ```
 
 :::
@@ -303,7 +304,7 @@ with:
 前提としてryeでコマンド実行する場合はryeのスクリプト機能を使うと便利です。
 pyproject.tomlに設定したスクリプトを`rye run <script>`で動かすことができます。
 
-`test:cov`で動作するようにpyroject.tomlを設定します
+`test:cov`で動作するようにpyproject.tomlを設定します
 
 ```toml:pyproject.toml
 [tool.rye.scripts]
@@ -368,7 +369,7 @@ ci = { chain = ["check", "test:cov"] }
 check = { chain = ["check:ruff", "check:mypy"] }
 "test:cov" = "./scripts/test_cov.sh"
 "check:ruff" = "ruff check --config pyproject.toml src"
-"check:mypy" = "mypy src --config-file=../../pyproject.toml"
+"check:mypy" = "mypy src --config-file=pyproject.toml"
 ```
 
 ローカル環境で`rye run ci`で静的解析とテストが行われます
@@ -411,9 +412,8 @@ on:
   pull_request:          # 重要:ワークフローの起動条件にプルリクエストを追加
 
 permissions:
-  id-token: write
-  contents: write        # 重要:権限設定
   pull-requests: write   # 重要:権限設定
+  contents: read
 
 jobs:
   setup:
@@ -455,13 +455,13 @@ on:
 ```
 
 2点目は権限設定`permissions`キーに適切な書き込み権限を付与することです。
-公式に従い`content`と`pull-requests`の権限を`write`にします。
+`pull-requests`の権限を`write`にします。
+カバレッジをプルリクエストに表示するだけであれば`content`の権限は`read`で大丈夫です。
 
 ```yml
 permissions:
-  id-token: write
-  contents: write        # 重要:権限設定
   pull-requests: write   # 重要:権限設定
+  contents: read
 ```
 
 次にci.ymlの実装を行います。
@@ -504,6 +504,8 @@ jobs:
           pytest-coverage-path: ./pytest-coverage.txt
           junitxml-path: ./pytest.xml
           title: Coverage Report（ServiceA）
+          unique-id-for-comment: ServiceA # 同じコメントにテスト結果を追記するための一意なID
+          create-new-comment: false # 既存のコメントを更新します。同じコメントにテスト結果を追記するため、新しいコメントは作成しません。
 ```
 
 ポイントは2点。CI実施のステップとテストカバレッジのコメント処理です。
@@ -520,8 +522,6 @@ jobs:
 今回のワークフローはプルリクエスト以外にプッシュ時でも動作する仕組みになっています。
 プルリクエストの時だけステップ処理を行いたいので`if`キーでイベントを制限します。
 
-また、公式サンプルから`title`引数を新たに追加しました。これはプルリクエストのコメントタイトルです。今回は効果ありませんが、復数サービスを1リポジトリで管理している場合は指定すると良さそうです。
-
 ```yml
 - name: comment coverage on pull request
   if: github.event_name == 'pull_request' # 重要:プルリクエストの時にテストカバレッジをコメントする
@@ -530,7 +530,18 @@ jobs:
     pytest-coverage-path: ./pytest-coverage.txt
     junitxml-path: ./pytest.xml
     title: Coverage Report（ServiceA）
+    unique-id-for-comment: ServiceA 
+    create-new-comment: false
 ```
+
+公式サンプルからいくつかオプションを追加しています。
+
+- `title`：コメントタイトル
+- `unique-id-for-comment`: 同じコメントにテスト結果を追記するための一意なID。
+1回のCIで復数のカバレッジを表示したいモノレポ構成の場合に指定しておくと、サービスごとにカバレッジコメントがでてきます
+- `create-new-comment`: プルリクエスト更新時のコメント更新挙動です
+  - true: 新しくコメントする
+  - false: 既存のコメントを更新する
 
 最終的なディレクトリ構成は以下の通りです。
 
