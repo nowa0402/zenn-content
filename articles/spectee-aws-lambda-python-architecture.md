@@ -4,6 +4,7 @@ emoji: "👟"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python", "aws", "cdk", "lambda", "githubactions"]
 published: false
+publication_name: "spectee"
 ---
 
 Specteeでエンジニアをしている和山と申します！
