@@ -10,14 +10,18 @@ publication_name: "spectee"
 Specteeでエンジニアをしている和山と申します！
 
 PythonでAWS LambdaをCDKを使ってArm版にしたいと思ったことはありませんか？
-実は、何も設定せずに進めるとx86版としてバンドルされてしまうことがあります。本記事ではこの問題の原因と、正しいバンドル方法について解説します。
+Arm版はx86版より[料金が安く設定](https://aws.amazon.com/jp/lambda/pricing/)されているのと、x86版より若干性能が良いため経済的にLambdaを利用することができます。
+少し古めの記事ですが、料金と性能比較をしてくださっている記事があったので紹介します。
+https://dev.classmethod.jp/articles/aws-lambda-graviton2/
+
+このように経済的なArm版のLambdaですが、CDKで実装する際にArm版として実装したのにx86版としてバンドルされてしまうことがあります。本記事ではこの問題の原因と、正しいバンドル方法について解説します。
 
 ## 本記事の結論
 
 PythonでArm版のLambdaを指定するときは下記の実装をします。
 ポイントは`code.bundling.image`にarm64版のイメージを明示的に指定することです。
 
-```ts
+```ts:cdk/lib/cdk-stack.ts
 import * as cdk from 'aws-cdk-lib';
 import { aws_lambda as lambda } from 'aws-cdk-lib';
 import type { Construct } from 'constructs';
@@ -107,7 +111,7 @@ pydantic-core==2.27.2
 typing-extensions==4.12.2
 ```
 
-`cdk/lib/cdk-stack.ts`はarm64版のLambda設定を記載します。
+`cdk/lib/cdk-stack.ts`はArm版のLambda設定を記載します。
 バンドルの設定は[公式ドキュメント](https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_lambda-readme.html#bundling-asset-code)の設定を参考にしています。
 
 ```ts:cdk/lib/cdk-stack.ts
@@ -157,7 +161,7 @@ new CdkStack(app, 'SamplePythonArmStack', {});
 ```
 
 `.github/workflows/cd.yml`にデプロイのワークフローを記載します。
-今回は手動起動で動作するようにしています。ジョブのOSはubuntu(x86)なのでarm64版のビルドを可能にするため[docker/setup-qemu-action](https://github.com/docker/setup-qemu-action)を採用しています。
+今回は手動起動で動作するようにしています。ジョブのOSはubuntu(x86)なのでArm版のビルドを可能にするため[docker/setup-qemu-action](https://github.com/docker/setup-qemu-action)を採用しています。
 
 ```yml:.github/workflows/cd.yml
 name: Deploy to SampleLambda
@@ -262,7 +266,7 @@ bundling: {
 ## 修正方法
 
 Issueの中で示されていた解決方法は２つありました。
-１つ目は、「image」オプションに使うイメージでarm64版を明示的に指定することです。
+１つ目は、「image」オプションに使うイメージでArm版を明示的に指定することです。
 https://github.com/aws/aws-cdk/issues/18696#issuecomment-1027322761
 
 コメントの内容を反映すると下記のようなコードになります。
@@ -356,11 +360,11 @@ Issueのコメントを抜粋したものが下記のコードになります
 
 ## まとめ
 
-今回はPythonでAWS LambdaをCDKを使ってArm版にする時に躓いた点と解消方法を解説しました。
+今回はPythonでAWS LambdaをCDKを使ってArm版の指定時に躓いた点と解消方法を解説しました。
 
 バンドル時の注意点をまとめると
 
-- `code.bundling.platform`オプションは2025/01時点で反映されていない
+- `code.bundling.platform`オプションは2025/01時点で反映されないっぽい
 - `code.bundling.image`オプションで明示的にarm版のイメージタグを指定する
 
 になります。
