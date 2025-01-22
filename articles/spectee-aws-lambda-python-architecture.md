@@ -1,5 +1,5 @@
 ---
-title: "PythonでAWS LambdaをArm版にする方法：GitHubActions×CDKでバンドル時のイメージがx86になる問題を解決"
+title: "PythonのAWSLambdaをCDKでArm版にする：GitHubActionsでバンドル時のイメージがx86になる問題を解決"
 emoji: "👟"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python", "aws", "cdk", "lambda", "githubactions"]
