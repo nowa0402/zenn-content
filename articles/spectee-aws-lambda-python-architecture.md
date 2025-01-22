@@ -3,7 +3,7 @@ title: "PythonでAWS LambdaをArm版にする方法：GitHubActions×CDKでバ�
 emoji: "👟"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["python", "aws", "cdk", "lambda", "githubactions"]
-published: false
+published: true
 publication_name: "spectee"
 ---
 
@@ -323,7 +323,7 @@ export class CdkStack extends cdk.Stack {
 }
 ```
 
-GitHub Actionsのログをみてみると、使用イメージとpydanticライブラリがarm64版になっていることが確認できます
+GitHub Actionsのログをみてみると、使用イメージとpydanticライブラリがarm64版になっていることが確認できます。
 
 ```bash
 Status: Downloaded newer image for public.ecr.aws/sam/build-python3.11:latest-arm64
@@ -332,7 +332,7 @@ Collecting pydantic-core==2.27.2 (from -r requirements.txt (line 3))
   Downloading pydantic_core-2.27.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl.metadata (6.6 kB)
 ```
 
-２つ目の方法は、`@aws-cdk/aws-lambda-python-alpha`を使用することです
+２つ目の方法は、`@aws-cdk/aws-lambda-python-alpha`を使用することです。
 https://docs.aws.amazon.com/cdk/api/v2/docs/aws-lambda-python-alpha-readme.html
 
 [PIP_PLATFORMの環境変数に使用するプラットフォームを指定する](https://github.com/aws/aws-cdk/issues/18696#issuecomment-2196811267)ようです。
