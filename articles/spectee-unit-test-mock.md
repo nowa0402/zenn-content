@@ -3,7 +3,7 @@ title: "「単体テストの考え方/使い方」勉強会02 〜モックの�
 emoji: "🕵️"
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["test", "mock"]
-published: false
+published: true
 publication_name: "spectee"
 ---
 
