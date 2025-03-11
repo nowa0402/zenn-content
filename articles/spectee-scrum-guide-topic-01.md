@@ -10,6 +10,9 @@ publication_name: "spectee"
 私達の所属する部署ではプロダクト開発の手法として、複数チームでスクラムを導入しています。
 今回は有志でスクラムガイドの読み合わせをし、そこから得た気づきを紹介します！
 
+読み合わせをしたスクラムガイドはこちら
+https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-Japanese.pdf
+
 スクラムガイド読み合わせの概要についてはこちら
 https://zenn.dev/spectee/articles/spectee-scrum-guide
 
