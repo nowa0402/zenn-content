@@ -11,6 +11,7 @@ publication_name: "spectee"
 今回は有志でスクラムガイドの読み合わせをし、そこから得た気づきを紹介します！
 
 読み合わせをしたスクラムガイドはこちら
+（本文中の引用は、以下のリンクからのものです）
 https://scrumguides.org/docs/scrumguide/v2020/2020-Scrum-Guide-Japanese.pdf
 
 スクラムガイド読み合わせの概要についてはこちら
