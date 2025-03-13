@@ -1,7 +1,7 @@
 ---
 title: "スクラムガイドを8ヶ月かけて読み合わせてみた02 〜スクラムの三本柱・スクラムマスターの責任〜"
 emoji: "🎲"
-type: "tech" # tech: 技術記事 / idea: アイデア
+type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["scrum", "スクラム", "agile", "アジャイル", "輪読会"]
 published: true
 publication_name: "spectee"
