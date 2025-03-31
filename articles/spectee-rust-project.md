@@ -3,7 +3,7 @@ title: "業務でRustを採用してみた"
 emoji: "⚙️"
 type: "idea" # tech: 技術記事 / idea: アイデア
 topics: ["rust"]
-published: false
+published: true
 publication_name: "spectee"
 ---
 
